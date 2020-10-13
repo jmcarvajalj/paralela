@@ -2,6 +2,7 @@
 #include <opencv2/highgui.hpp>
 #include <pthread.h>
 #include <iostream>
+#include <stdio.h>
 #include <sys/time.h>
 
 using namespace std;
@@ -56,7 +57,10 @@ int main(int argc, char** argv) {
 
     timersub(&tval_after,&tval_before,&tval_result);
 
-    printf("Time elapsed with %d threads: %ld.%06lds\n", num_threads, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);
+    FILE * pFile;
+    pFile = fopen("resultados.txt", "w");
+    fprintf(pFile, "Time elapsed with %d threads: %ld.%06lds\n", num_threads, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);
+    fclose(pFile);    
     return 0;
 }
 
