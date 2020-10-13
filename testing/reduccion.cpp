@@ -7,30 +7,39 @@ using namespace std;
 using namespace cv;
 
 Mat image;
+int num_threads;
 
 void* transform4kto480(void* arg);
+
 
 int main(int argc, char** argv) {
     // We'll start by loading an image from the drive
     // Check the number of parameters
-    if (argc < 2) {
+    if (argc < 3) {
         // Tell the user how to run the program
-        cerr << "Uso:" << argv[0] << " Imagen (Ejemplo:./reduccion 4k.jpg)"<< endl;
+        cerr << "Uso:" << argv[0] << " Imagen #hilos (Ejemplo:./reduccion 4k.jpg 8)"<< endl;
         /* "Usage messages" are a conventional way of telling the user
          * how to run a program if they enter the command incorrectly.
          */
         return 1;
     }
+
     Mat image = imread(argv[1], IMREAD_COLOR);
+    num_threads = atoi(argv[2]);
     //Trhead ID
-    pthread_t tid;
+    pthread_t tids[num_threads];
     //Create Attributes
+    
+
+    for(int i=0; i<num_threads;i++){
     pthread_attr_t attr;
     pthread_attr_init(&attr);
-
-    pthread_create(&tid,&attr, transform4kto480, &image);
+    pthread_create(&tids[i],&attr, transform4kto480, &image);
+    }
     //Wait until thread has done its work
-    pthread_join(tid, NULL); 
+    for(int i=0; i<num_threads;i++){
+    pthread_join(tids[i], NULL);
+    } 
     //transform4kto480(argv[1]);
     return 0;
 }
