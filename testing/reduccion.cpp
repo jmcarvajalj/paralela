@@ -6,7 +6,9 @@
 using namespace std;
 using namespace cv;
 
-void transform4kto480(Mat image);
+Mat image;
+
+void* transform4kto480(void* arg);
 
 int main(int argc, char** argv) {
     // We'll start by loading an image from the drive
@@ -20,13 +22,25 @@ int main(int argc, char** argv) {
         return 1;
     }
     Mat image = imread(argv[1], IMREAD_COLOR);
-    transform4kto480(image);
+    //Trhead ID
+    pthread_t tid;
+    //Create Attributes
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+
+    pthread_create(&tid,&attr, transform4kto480, &image);
+    //Wait until thread has done its work
+    pthread_join(tid, NULL); 
+    //transform4kto480(argv[1]);
     return 0;
 }
 
-void transform4kto480(Mat image){
+void* transform4kto480(void* arg){
+
+    Mat *image_ptr = (Mat*) arg;
+    Mat image = *image_ptr;
     
-if(image.empty()) {
+    if(image.empty()) {
         cout << "Error: the image has been incorrectly loaded." << endl;
     }
 
@@ -108,4 +122,5 @@ if(image.empty()) {
     imshow("My first OpenCV window", copy);
     waitKey(0);
 */
+    pthread_exit(0);
 }
