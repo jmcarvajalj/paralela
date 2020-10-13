@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
     // Check the number of parameters
     if (argc < 2) {
         // Tell the user how to run the program
-        cerr << "Uso:" << argv[0] << " Imagen (E:./reduccion 4k.jpg)"<< endl;
+        cerr << "Uso:" << argv[0] << " Imagen (Ejemplo:./reduccion 4k.jpg)"<< endl;
         /* "Usage messages" are a conventional way of telling the user
          * how to run a program if they enter the command incorrectly.
          */
