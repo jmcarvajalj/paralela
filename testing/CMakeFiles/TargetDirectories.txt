@@ -1,3 +1,0 @@
-/home/josemiguelcarvajaljimenez/Paralela/paralela/testing/CMakeFiles/rebuild_cache.dir
-/home/josemiguelcarvajaljimenez/Paralela/paralela/testing/CMakeFiles/edit_cache.dir
-/home/josemiguelcarvajaljimenez/Paralela/paralela/testing/CMakeFiles/reduccion.dir

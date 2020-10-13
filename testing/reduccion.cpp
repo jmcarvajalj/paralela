@@ -21,9 +21,9 @@ struct transform4kto480_struct{
 int main(int argc, char** argv) {
     // We'll start by loading an image from the drive
     // Check the number of parameters
-    if (argc < 3) {
+    if (argc < 4) {
         // Tell the user how to run the program
-        cerr << "Uso:" << argv[0] << " Imagen #Hilos (Ejemplo:./reduccion 4k.jpg 8)"<< endl;
+        cerr << "Uso:" << argv[0] << " Imagen-Entrada Imagen-Salida #Hilos (Ejemplo:./reduccion 4k.jpg result.jpg 8)"<< endl;
         /* "Usage messages" are a conventional way of telling the user
          * how to run a program if they enter the command incorrectly.
          */
@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
 
     gettimeofday(&tval_before, NULL);
     //Mat image = imread(argv[1], IMREAD_COLOR);
-    num_threads = atoi(argv[2]);
+    num_threads = atoi(argv[3]);
     //Trhead ID
     pthread_t tids[num_threads];
     //Create Attributes
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
     //Wait until thread has done its work
     for(int i=0; i<num_threads;i++){
     pthread_join(tids[i], NULL);
-    imwrite("4kto480.jpg", args[i].result);
+    imwrite(argv[2], args[i].result);
     } 
     
     gettimeofday(&tval_after, NULL);
