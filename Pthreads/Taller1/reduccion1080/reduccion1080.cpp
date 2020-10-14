@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     
     // We check that our image has been correctly loaded
     if(image.empty()) {
-        std::cout << "Error: the image has been incorrectly loaded." << std::endl;
+        cout << "Error: the image has been incorrectly loaded." << endl;
         return 0;
     }
 
