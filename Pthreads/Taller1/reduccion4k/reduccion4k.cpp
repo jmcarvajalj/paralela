@@ -1,15 +1,29 @@
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
-
+#include <pthread.h>
 #include <iostream>
+#include <stdio.h>
+#include <sys/time.h>
 
+using namespace std;
 using namespace cv;
 
 int main(int argc, char** argv) {
+
+    if (argc < 3) {
+        // Tell the user how to run the program
+        cerr << "Uso:" << argv[0] << " Imagen-Entrada Imagen-Salida (Ejemplo:./reduccion4k 4k.jpg result.jpg)"<< endl;
+        /* "Usage messages" are a conventional way of telling the user
+         * how to run a program if they enter the command incorrectly.
+         */
+        return 1;
+    }
+
+    struct timeval tval_before, tval_after, tval_result;
+
+    gettimeofday(&tval_before, NULL);
     // We'll start by loading an image from the drive
-    Mat image = imread("4k.jpg", IMREAD_COLOR);
-
-
+    Mat image = imread(argv[1], IMREAD_COLOR);
     // We check that our image has been correctly loaded
     if(image.empty()) {
         std::cout << "Error: the image has been incorrectly loaded." << std::endl;
@@ -85,7 +99,7 @@ int main(int argc, char** argv) {
         }
     }
 
-    imwrite("4kto480.jpg", copy);
+    imwrite(argv[2], copy);
 /*
     // Then we create a window to display our image
     namedWindow("My first OpenCV window");
@@ -94,5 +108,13 @@ int main(int argc, char** argv) {
     imshow("My first OpenCV window", copy);
     waitKey(0);
 */
+    gettimeofday(&tval_after, NULL);
+
+    timersub(&tval_after,&tval_before,&tval_result);
+
+    FILE * pFile;
+    pFile = fopen("resultados.txt", "w");
+    fprintf(pFile, "Time elapsed: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);
+    fclose(pFile);    
     return 0;
 }
