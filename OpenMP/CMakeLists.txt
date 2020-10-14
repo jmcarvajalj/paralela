@@ -6,3 +6,8 @@ include_directories( ${OpenCV_INCLUDE_DIRS} )
 add_executable(reduccion4k reduccion4k.cpp)
 target_link_libraries(reduccion4k ${OpenCV_LIBS})
 target_link_libraries(reduccion4k PUBLIC OpenMP::OpenMP_CXX)
+
+#[[SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg")
+SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg")
+SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -pg") 
+]]

@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
     timersub(&tval_after,&tval_before,&tval_result);
 
     FILE * pFile;
-    pFile = fopen("resultados.txt", "w");
+    pFile = fopen("resultados.txt", "a");
     fprintf(pFile, "Time elapsed with %d threads: %ld.%06lds\n", num_threads, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);
     fclose(pFile);    
     return 0;

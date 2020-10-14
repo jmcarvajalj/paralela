@@ -33,8 +33,8 @@ int main(int argc, char** argv) {
     
     #pragma omp parallel num_threads(THREADS) //inicio de region paralela
     {
-        int ID = omp_get_thread_num();
-        transform4kto480(image, ID, result_image);
+    int ID = omp_get_thread_num();
+    transform4kto480(image, THREADS, result_image);
     } //fin de region paralela
     
     gettimeofday(&tval_after, NULL);
@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
     timersub(&tval_after,&tval_before,&tval_result);
 
     FILE * pFile;
-    pFile = fopen("resultados.txt", "w");
+    pFile = fopen("resultados.txt", "a");
     fprintf(pFile, "Time elapsed with %d threads: %ld.%06lds\n", THREADS, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
     fclose(pFile);    
     return 0;
@@ -70,60 +70,63 @@ void transform4kto480(Mat image, int ID, string result_image){
     temp.at<Vec3b>(temp.rows - 1, temp.cols - 1) = cpixel;
 
 
-    for(int i = 0; i < image.rows ; i++) {
-        for(int j = 0; j < image.cols; j++) {
-            cpixel = image.at<Vec3b>(i, j);
-            temp.at<Vec3b>(i+1, j+1) = cpixel;
-        }
-    }
+    
 
-    for(int i = 0; i < image.rows; i++){
-        cpixel = image.at<Vec3b>(i, 0);
-        temp.at<Vec3b>(i+1, 0) = cpixel;
-    }
-
-    for(int i = 0; i < image.rows; i++){
-        cpixel = image.at<Vec3b>(i, image.cols - 1);
-        temp.at<Vec3b>(i+1, temp.cols - 1) = cpixel;
-    }
-
-    for(int i = 0; i < image.cols; i++){
-        cpixel = image.at<Vec3b>(0, i);
-        temp.at<Vec3b>(0, i + 1) = cpixel;
-    }
-
-    for(int i = 0; i < image.cols; i++){
-        cpixel = image.at<Vec3b>(image.rows - 1, i);
-        temp.at<Vec3b>(temp.rows - 1, i + 1) = cpixel;
-    }
-
-    for(int i = 0; i < image.rows; i++){
-        for(int j = 0; j < image.cols; j++){
-            Vec3b mpixel = temp.at<Vec3b>(i+1, j+1);
-            Vec3b upixel = temp.at<Vec3b>(i, j+1);
-            Vec3b dpixel = temp.at<Vec3b>(i+2, j+1);
-            Vec3b lpixel = temp.at<Vec3b>(i+1, j);
-            Vec3b rpixel = temp.at<Vec3b>(i+1, j+2);
-
-            uchar a = (mpixel[0] + upixel[0] + dpixel[0] + lpixel[0] + rpixel[0])/5;
-            uchar b = (mpixel[1] + upixel[1] + dpixel[1] + lpixel[1] + rpixel[1])/5;
-            uchar c = (mpixel[2] + upixel[2] + dpixel[2] + lpixel[2] + rpixel[2])/5;
-
-            Vec3b ppixel;
-            ppixel[0] = a;
-            ppixel[1] = b;
-            ppixel[2] = c;
-
-            if((i+j)%2 == 0){
-                if(i%2 == 0)
-                    copy.at<Vec3b>((i*2)/9,j/6) = ppixel;
-                else
-                    copy.at<Vec3b>(((i*2)/9)+1, j/6+1) = ppixel;
+        for(int i = 0; i < image.rows ; i++) {
+            for(int j = 0; j < image.cols; j++) {
+                cpixel = image.at<Vec3b>(i, j);
+                temp.at<Vec3b>(i+1, j+1) = cpixel;
             }
         }
-    }    
 
-    imwrite(result_image, copy);
+        for(int i = 0; i < image.rows; i++){
+            cpixel = image.at<Vec3b>(i, 0);
+            temp.at<Vec3b>(i+1, 0) = cpixel;
+        }
+
+        for(int i = 0; i < image.rows; i++){
+            cpixel = image.at<Vec3b>(i, image.cols - 1);
+            temp.at<Vec3b>(i+1, temp.cols - 1) = cpixel;
+        }
+
+        for(int i = 0; i < image.cols; i++){
+            cpixel = image.at<Vec3b>(0, i);
+            temp.at<Vec3b>(0, i + 1) = cpixel;
+        }
+
+        for(int i = 0; i < image.cols; i++){
+            cpixel = image.at<Vec3b>(image.rows - 1, i);
+            temp.at<Vec3b>(temp.rows - 1, i + 1) = cpixel;
+        }
+
+        for(int i = 0; i < image.rows; i++){
+            for(int j = 0; j < image.cols; j++){
+                Vec3b mpixel = temp.at<Vec3b>(i+1, j+1);
+                Vec3b upixel = temp.at<Vec3b>(i, j+1);
+                Vec3b dpixel = temp.at<Vec3b>(i+2, j+1);
+                Vec3b lpixel = temp.at<Vec3b>(i+1, j);
+                Vec3b rpixel = temp.at<Vec3b>(i+1, j+2);
+
+                uchar a = (mpixel[0] + upixel[0] + dpixel[0] + lpixel[0] + rpixel[0])/5;
+                uchar b = (mpixel[1] + upixel[1] + dpixel[1] + lpixel[1] + rpixel[1])/5;
+                uchar c = (mpixel[2] + upixel[2] + dpixel[2] + lpixel[2] + rpixel[2])/5;
+
+                Vec3b ppixel;
+                ppixel[0] = a;
+                ppixel[1] = b;
+                ppixel[2] = c;
+
+                if((i+j)%2 == 0){
+                    if(i%2 == 0)
+                        copy.at<Vec3b>((i*2)/9,j/6) = ppixel;
+                    else
+                        copy.at<Vec3b>(((i*2)/9)+1, j/6+1) = ppixel;
+                }
+            }
+        }    
+        
+        #pragma omp critical
+        imwrite(result_image, copy);
 /*  Then we create a window to display our image
     namedWindow("My first OpenCV window");
 
