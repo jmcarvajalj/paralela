@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 2.8)
+project(reduccion4k)
+find_package(OpenCV REQUIRED)
+find_package(OpenMP REQUIRED)
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+add_executable(reduccion4k reduccion4k.cpp)
+target_link_libraries(reduccion4k ${OpenCV_LIBS})
+target_link_libraries(reduccion4k PUBLIC OpenMP::OpenMP_CXX)

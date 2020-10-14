@@ -1,0 +1,5 @@
+Time elapsed with 1 threads: 0.971134s
+Time elapsed with 2 threads: 0.991582s
+Time elapsed with 4 threads: 1.033697s
+Time elapsed with 8 threads: 1.866224s
+Time elapsed with 16 threads: 3.663324s
