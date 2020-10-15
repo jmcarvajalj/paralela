@@ -125,7 +125,6 @@ void transform4kto480(Mat image, int ID, string result_image){
             }
         }    
         
-        #pragma omp critical
         imwrite(result_image, copy);
 /*  Then we create a window to display our image
     namedWindow("My first OpenCV window");
