@@ -58,8 +58,8 @@ int main(int argc, char** argv) {
     timersub(&tval_after,&tval_before,&tval_result);
 
     FILE * pFile;
-    pFile = fopen("resultados.txt", "a");
-    fprintf(pFile, "Time elapsed with %d threads: %ld.%06lds\n", num_threads, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);
+    pFile = fopen("../../resultados.txt", "a");
+    fprintf(pFile, "Time elapsed transforming a 720p image to 480p using PThreads with %d threads: %ld.%06lds\n", THREADS, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
     fclose(pFile);    
     return 0;
 }

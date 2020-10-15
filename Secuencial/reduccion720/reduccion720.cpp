@@ -120,8 +120,8 @@ int main(int argc, char** argv) {
     timersub(&tval_after,&tval_before,&tval_result);
 
     FILE * pFile;
-    pFile = fopen("resultados.txt", "a");
-    fprintf(pFile, "Time elapsed: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);
+    pFile = fopen("../../resultados.txt", "a");
+    fprintf(pFile, "Time elapsed transforming a 720p image to 480p sequentially: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
     fclose(pFile);    
     return 0;
 }

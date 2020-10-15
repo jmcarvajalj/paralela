@@ -1,3 +1,0 @@
-/home/josemiguelcarvajaljimenez/Paralela/paralela/Pthreads/reduccion720/CMakeFiles/rebuild_cache.dir
-/home/josemiguelcarvajaljimenez/Paralela/paralela/Pthreads/reduccion720/CMakeFiles/edit_cache.dir
-/home/josemiguelcarvajaljimenez/Paralela/paralela/Pthreads/reduccion720/CMakeFiles/reduccion720.dir
