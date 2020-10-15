@@ -28,3 +28,23 @@ Posix Threads
     Time elapsed with 4 threads: 0.131815s
     Time elapsed with 8 threads: 0.225705s
     Time elapsed with 16 threads: 0.436633s
+
+OpenMP
+
+    OpenMP 4k a 480p
+    Time elapsed with 2 threads: 0.988613s
+    Time elapsed with 4 threads: 0.954480s
+    Time elapsed with 8 threads: 1.965678s
+    Time elapsed with 16 threads: 3.505696s
+
+    OpenMP 1080p a 480p
+    Time elapsed with 2 threads: 0.228979s
+    Time elapsed with 4 threads: 0.247163s
+    Time elapsed with 8 threads: 0.447955s
+    Time elapsed with 16 threads: 0.925373s
+
+    OpenMP 720p a 480p
+    Time elapsed with 2 threads: 0.105388s
+    Time elapsed with 4 threads: 0.107367s
+    Time elapsed with 8 threads: 0.201000s
+    Time elapsed with 16 threads: 0.429408s

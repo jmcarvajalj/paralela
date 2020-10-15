@@ -1,40 +1,67 @@
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
-#include <pthread.h>
 #include <iostream>
 #include <stdio.h>
 #include <sys/time.h>
+#include "omp.h"
 
 using namespace std;
 using namespace cv;
 
+void transform4kto480(Mat image, int ID, string result_image);
+
 int main(int argc, char** argv) {
-    // We'll start by loading an image from the drive
-    if (argc < 3) {
+
+    if (argc < 4) {
         // Tell the user how to run the program
-        cerr << "Uso:" << argv[0] << " Imagen-Entrada Imagen-Salida (Ejemplo:./reduccion1080 1080.jpg result.jpg)"<< endl;
+        cerr << "Uso:" << argv[0] << " Imagen-Entrada Imagen-Salida #hilos(Ejemplo:./reduccion720 720.jpg result.jpg 8)"<< endl;
         /* "Usage messages" are a conventional way of telling the user
          * how to run a program if they enter the command incorrectly.
          */
         return 1;
     }
 
+    Mat image = imread(argv[1], IMREAD_COLOR);
+
+    string result_image = argv[2];
+
+    int THREADS = atoi(argv[3]);
+
     struct timeval tval_before, tval_after, tval_result;
 
     gettimeofday(&tval_before, NULL);
-    // We'll start by loading an image from the drive
-    Mat image = imread(argv[1], IMREAD_COLOR);
     
-    // We check that our image has been correctly loaded
+    #pragma omp parallel num_threads(THREADS) //inicio de region paralela
+    {
+    int ID = omp_get_thread_num();
+    transform4kto480(image, THREADS, result_image);
+    } //fin de region paralela
+    
+    gettimeofday(&tval_after, NULL);
+
+    timersub(&tval_after,&tval_before,&tval_result);
+
+    FILE * pFile;
+    pFile = fopen("resultados.txt", "a");
+    fprintf(pFile, "Time elapsed with %d threads: %ld.%06lds\n", THREADS, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
+    fclose(pFile);    
+    return 0;
+}
+
+void transform4kto480(Mat image, int ID, string result_image){
+
     if(image.empty()) {
         cout << "Error: the image has been incorrectly loaded." << endl;
-        return 0;
     }
 
-    Mat temp(image.rows + 2, image.cols + 2, CV_8UC3, Scalar(255,255, 255));
+    Mat temp(image.rows + 2, image.cols + 2, CV_8UC3, Scalar(255,255, 255)); 
 
-    Mat copy( (image.rows*4)/9, image.cols/3, CV_8UC3, Scalar(255,255, 255));
-    
+
+    //tamaño de 720 a 480
+    Mat copy( (image.rows*2)/3, image.cols/2, CV_8UC3, Scalar(255,255, 255));   
+    // el tamaño de la imagen se vahacia 640x480 mediante 
+    //proporcion de imagen
+
 
     Vec3b cpixel;
     cpixel[0] = (uchar) 0;
@@ -93,30 +120,20 @@ int main(int argc, char** argv) {
 
             if((i+j)%2 == 0){
                 if(i%2 == 0)
-                    copy.at<Vec3b>((i*4)/9,j/3) = ppixel;
+                    copy.at<Vec3b>((i*2)/3,j/2) = ppixel;    
+                    //aqui se anexa el cambio y asignacion de pixeles ala nueva imagen
                 else
-                    copy.at<Vec3b>(((i*4)/9)+1, j/3+1) = ppixel;
+                    copy.at<Vec3b>(((i*2)/3)+1, j/2+1) = ppixel;
             }
         }
-    }
-
-
-    imwrite(argv[2], copy);
-/*
-    // Then we create a window to display our image
+    }    
+    
+    imwrite(result_image, copy);
+/*  Then we create a window to display our image
     namedWindow("My first OpenCV window");
 
     // Finally, we display our image and ask the program to wait for a key to be pressed
     imshow("My first OpenCV window", copy);
     waitKey(0);
 */
-    gettimeofday(&tval_after, NULL);
-
-    timersub(&tval_after,&tval_before,&tval_result);
-
-    FILE * pFile;
-    pFile = fopen("resultados.txt", "a");
-    fprintf(pFile, "Time elapsed: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);
-    fclose(pFile);    
-    return 0;
 }
