@@ -1,0 +1,2 @@
+mpicc mpi_test.c -o mpi_test
+mpirun -np 4 mpi_test
