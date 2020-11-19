@@ -5,6 +5,8 @@
 #include <sys/time.h>
 #include <cuda.h>
 
+int id_hilo;
+
 using namespace std;
 using namespace cv;
 
@@ -43,13 +45,10 @@ int main(int argc, char** argv) {
     cudaMemset(sumaDispositivo, 0, size);
     
     transform4kto480 <<<dimGrid, dimBlock>>> (sumaDispositivo, BLOCKS, THREADS);
-    
-
-
-
-
-
-
+    cudaMemcpy(sumaHost, sumaDispositivo, size, cudaMemcpyDeviceToHost);
+    for(id_hilo=0; id_hilo<THREADS*BLOCKS; id_hilo++)
+		pi += sumaHost[id_hilo];
+	pi *= paso;
     
     gettimeofday(&tval_after, NULL);
 
@@ -57,13 +56,20 @@ int main(int argc, char** argv) {
 
     FILE * pFile;
     pFile = fopen("resultados.txt", "a");
-    fprintf(pFile, "Time elapsed transforming a 4k image to 480p using OpenMP with %d threads: %ld.%06lds\n", THREADS, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
+    fprintf(pFile, "Time elapsed transforming a 4k image to 480p using CUDA with %d threads and %d blocks: %ld.%06lds\n", THREADS, BLOCKS, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
     fclose(pFile);    
     return 0;
 }
 
 
 __global__ void transform4kto480(Mat image, string result_image){
+    int i;
+    double x;
+    int index = blockIdx.x*blockDim.x+threadIdx.x;
+	for (i=index; i< numero_iteraciones; i+=THREADS*BLOCKS) {
+		x = (i+0.5)*paso;
+		suma[index] += 4.0/(1.0+x*x);
+	}
 
     if(image.empty()) {
         cout << "Error: the image has been incorrectly loaded." << endl;
