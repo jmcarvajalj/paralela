@@ -45,7 +45,7 @@ int main()
     cudaEventRecord(start); 
   
     while (n > 1) { 
-        maxi<<<grids, block> > >(ad, bd, n); 
+        maxi<<<grids, block>>>(ad, bd, n); 
         n = ceil(n * 1.0f / 256.0f); 
         cudaMemcpy(ad, bd, n * sizeof(int), cudaMemcpyDeviceToDevice); 
     } 
