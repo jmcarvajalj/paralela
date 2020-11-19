@@ -1,2 +1,5 @@
 mpicc mpi_test.c -o mpi_test
 mpirun -np 4 mpi_test
+
+
+mpicc mpi_scatter-test.c -o mpi_scatter-test -lm
