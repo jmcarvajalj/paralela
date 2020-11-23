@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <sys/time.h>
 #include <cuda.h>
+#include <cuda_runtime.h>
+#include "opencv2/gpu/gpu.hpp"
 
 using namespace std;
 using namespace cv;
