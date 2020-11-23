@@ -10,7 +10,7 @@
 __global__ void add(int *a, int *b, int *c, int n);
 
 int main (void) {
-    int *a, *b, *c //host copies of a, b and c
+    int *a, *b, *c; //host copies of a, b and c
     int *d_a, *d_b, *d_c; // device copies of a, b, c
     int size = N * sizeof(int);
     // Alloc space for device copies of a, b, c
