@@ -52,15 +52,16 @@ int main(int argc, char** argv) {
     string *d_result_image;
 
     // Size, in bytes, of each vector
-    size_t bytes = n*sizeof(Mat);
+    size_t mat_size = n*sizeof(Mat);
+    size_t string_size = n*sizeof(string);
 
     struct timeval tval_before, tval_after, tval_result;
 
     gettimeofday(&tval_before, NULL);
 
     // Allocate memory on host
-    h_image = (Mat*)malloc(bytes);
-    h_result_image = (Mat*)malloc(bytes);
+    h_image = (Mat*)malloc(mat_size);
+    h_result_image = (Mat*)malloc(string_size);
 
     // Allocate memory on GPU
     cudaMalloc(&d_image, bytes);
