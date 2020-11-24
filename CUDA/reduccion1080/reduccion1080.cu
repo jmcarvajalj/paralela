@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
     cudaMalloc(&d_result_image, string_size);
 
     //Initialize on host
-    h_image = imread(&argv[1], IMREAD_COLOR);
+    h_image = imread(argv[1], IMREAD_COLOR);
 
     // Copy host to device
     cudaMemcpy( d_image, h_image, mat_size, cudaMemcpyHostToDevice);
