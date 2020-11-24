@@ -2,14 +2,6 @@
 #include <iostream>
 #include <stdio.h>
 #include <sys/time.h>
-#include <math.h>
-#include <cstdio>
-#include <cmath>
-#include <string>
-#include <ctime>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fstream>
 //opencv libraries
 //#include <opencv2/core/core.hpp>
 //#include <opencv2/highgui/highgui.hpp>
@@ -22,6 +14,8 @@
 //#include "opencv2/cuda/cuda.hpp"
 //#include "opencv2/cuda.hpp"
 #include "opencv2/core/cuda.hpp"
+#include "opencv2/core/cuda_types.hpp"
+#include "opencv2/core/cuda_stream_accessor.hpp"
 #include <device_launch_parameters.h>
 //#include "opencv2/cudaarithm.h"
 
