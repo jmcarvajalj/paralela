@@ -3,21 +3,17 @@
 #include <stdio.h>
 #include <sys/time.h>
 //opencv libraries
-//#include <opencv2/core/core.hpp>
-//#include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 //CUDA libraries
 #include <cuda.h>
 #include <cuda_runtime.h>
-//#include "opencv2/cuda/cuda.hpp"
-//#include "opencv2/cuda.hpp"
 #include "opencv2/core/cuda.hpp"
 #include "opencv2/core/cuda_types.hpp"
 #include "opencv2/core/cuda_stream_accessor.hpp"
 #include <device_launch_parameters.h>
-//#include "opencv2/cudaarithm.h"
+
 
 using namespace std;
 using namespace cv;
