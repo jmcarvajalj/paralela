@@ -19,9 +19,11 @@
 //CUDA libraries
 #include <cuda.h>
 #include <cuda_runtime.h>
-//git ad#include "opencv2/gpu/gpu.hpp"
-//#include "opencv2/gpu.hpp"
+#include "opencv2/cuda/cuda.hpp"
+#include "opencv2/cuda.hpp"
+#include "opencv2/core/cuda.hpp"
 #include <device_launch_parameters.h>
+#include "opencv2/cudaarithm.h"
 
 using namespace std;
 using namespace cv;
@@ -121,7 +123,8 @@ __global__ void transform1080to480(Mat *image, string *result_image, int n){
     Mat temp(image.rows + 2, image.cols + 2, CV_8UC3, Scalar(255,255, 255));
 
     Mat copy( (image.rows*4)/9, image.cols/3, CV_8UC3, Scalar(255,255, 255));
-    
+
+    if (id < n){    
 
     Vec3b cpixel;
     cpixel[0] = (uchar) 0;
@@ -194,5 +197,5 @@ __global__ void transform1080to480(Mat *image, string *result_image, int n){
     // Finally, we display our image and ask the program to wait for a key to be pressed
     imshow("My first OpenCV window", copy);
     waitKey(0);
-*/
+*/}
 }
