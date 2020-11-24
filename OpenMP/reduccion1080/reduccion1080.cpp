@@ -8,7 +8,7 @@
 using namespace std;
 using namespace cv;
 
-void transform4kto480(Mat image, int ID, string result_image);
+void transform1080to480(Mat image, int ID, string result_image);
 
 int main(int argc, char** argv) {
 
@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
     #pragma omp parallel num_threads(THREADS) //inicio de region paralela
     {
     int ID = omp_get_thread_num();
-    transform4kto480(image, THREADS, result_image);
+    transform1080to480(image, THREADS, result_image);
     } //fin de region paralela
     
     gettimeofday(&tval_after, NULL);
@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-void transform4kto480(Mat image, int ID, string result_image){
+void transform1080to480(Mat image, int ID, string result_image){
 
     if(image.empty()) {
         cout << "Error: the image has been incorrectly loaded." << endl;
