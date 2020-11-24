@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
     Mat *d_image;
     //Device output
     //string *d_result_image = argv[2];
-    string *d_result_image
+    string *d_result_image;
 
     // Size, in bytes, of each vector
     size_t bytes = n*sizeof(Mat);
@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
     cudaMalloc(&d_result_image, bytes);
 
     //Initialize on host
-    Mat h_image = imread(argv[1], IMREAD_COLOR);
+    h_image = imread(argv[1], IMREAD_COLOR);
 
     // Copy host to device
     cudaMemcpy( d_image, h_image, bytes, cudaMemcpyHostToDevice);
@@ -79,12 +79,12 @@ int main(int argc, char** argv) {
     int THREADS, BLOCKS;
 
     // Number of threads in each thread block
-    int THREADS = atoi(argv[3]);
+    THREADS = atoi(argv[3]);
      // Number of thread blocks in grid
-    int BLOCKS = atoi(argv[4]);
+    BLOCKS = atoi(argv[4]);
 
     // Execute the kernel
-    transform1080to480<<<gridSize, blockSize>>>(d_image, d_result_image, n);
+    transform1080to480<<<BLOCKS, THREADS>>>(d_image, d_result_image, n);
  
     // Copy array back to host
     cudaMemcpy( h_result_image, d_result_image, bytes, cudaMemcpyDeviceToHost );
@@ -121,8 +121,7 @@ __global__ void transform1080to480(Mat *image, string *result_image, int n){
     Mat temp(image.rows + 2, image.cols + 2, CV_8UC3, Scalar(255,255, 255));
 
     Mat copy( (image.rows*4)/9, image.cols/3, CV_8UC3, Scalar(255,255, 255));
-
-    if (id < n){    
+    
 
     Vec3b cpixel;
     cpixel[0] = (uchar) 0;
@@ -195,5 +194,5 @@ __global__ void transform1080to480(Mat *image, string *result_image, int n){
     // Finally, we display our image and ask the program to wait for a key to be pressed
     imshow("My first OpenCV window", copy);
     waitKey(0);
-*/}
+*/
 }
