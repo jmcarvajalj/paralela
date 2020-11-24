@@ -20,7 +20,7 @@
 #include <cuda.h>
 #include <cuda_runtime.h>
 //#include "opencv2/gpu/gpu.hpp"
-#include <opencv2/gpu.hpp>
+#include "opencv2/gpu.hpp"
 #include <device_launch_parameters.h>
 
 using namespace std;
