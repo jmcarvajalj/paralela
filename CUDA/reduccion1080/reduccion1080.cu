@@ -23,7 +23,7 @@
 //#include "opencv2/cuda.hpp"
 #include "opencv2/core/cuda.hpp"
 #include <device_launch_parameters.h>
-#include "opencv2/cudaarithm.h"
+//#include "opencv2/cudaarithm.h"
 
 using namespace std;
 using namespace cv;
