@@ -61,17 +61,17 @@ int main(int argc, char** argv) {
 
     // Allocate memory on host
     h_image = (Mat*)malloc(mat_size);
-    h_result_image = (Mat*)malloc(string_size);
+    h_result_image = (string*)malloc(string_size);
 
     // Allocate memory on GPU
-    cudaMalloc(&d_image, bytes);
-    cudaMalloc(&d_result_image, bytes);
+    cudaMalloc(&d_image, mat_size);
+    cudaMalloc(&d_result_image, string_size);
 
     //Initialize on host
     h_image = imread(argv[1], IMREAD_COLOR);
 
     // Copy host to device
-    cudaMemcpy( d_image, h_image, bytes, cudaMemcpyHostToDevice);
+    cudaMemcpy( d_image, h_image, mat_size, cudaMemcpyHostToDevice);
 
     int THREADS, BLOCKS;
 
@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
     transform1080to480<<<BLOCKS, THREADS>>>(d_image, d_result_image, n);
  
     // Copy array back to host
-    cudaMemcpy( h_result_image, d_result_image, bytes, cudaMemcpyDeviceToHost );
+    cudaMemcpy( h_result_image, d_result_image, string_size, cudaMemcpyDeviceToHost );
 
     // Release device memory
     cudaFree(d_image);
