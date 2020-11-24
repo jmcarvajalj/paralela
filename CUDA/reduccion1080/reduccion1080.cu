@@ -20,7 +20,7 @@
 #include <cuda.h>
 #include <cuda_runtime.h>
 //#include "opencv2/cuda/cuda.hpp"
-#include "opencv2/cuda.hpp"
+//#include "opencv2/cuda.hpp"
 #include "opencv2/core/cuda.hpp"
 #include <device_launch_parameters.h>
 #include "opencv2/cudaarithm.h"
