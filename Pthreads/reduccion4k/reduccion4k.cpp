@@ -61,20 +61,20 @@ int main(int argc, char** argv) {
     pFile = fopen("../../resultados.txt", "a");
     if (num_threads== 16)
     {
-        fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with 2 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
+        fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with 16 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
         fclose(pFile);
     }
-    else if (num_threads== 8)
+    else if (num_threads == 8)
     {
         fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with 4 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
         fclose(pFile);
     }
-    else if (num_threads== 4)
+    else if (num_threads == 4)
     {
         fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with 8 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
         fclose(pFile);
     }
-    else if (num_threads== 16)
+    else if (num_threads == 16)
     {
         fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with 2 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
         fclose(pFile);
