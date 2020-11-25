@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
 
     if (argc < 5) {
         // Tell the user how to run the program
-        cerr << "Uso:" << argv[0] << " Imagen-Entrada Imagen-Salida #Hilos #Bloques(Ejemplo:./reduccion1080 1080.jpg result.jpg 256 8)"<< endl;
+        cerr << "Uso:" << argv[0] << " Imagen-Entrada Imagen-Salida #Hilos #Bloques(Ejemplo:./reduccion720 720.jpg result.jpg 256 8)"<< endl;
         /* "Usage messages" are a conventional way of telling the user
          * how to run a program if they enter the command incorrectly.
          */
@@ -113,7 +113,7 @@ __global__ void transform1080to480(Mat *image, string *result_image, int n){
 
     Mat temp(image.rows + 2, image.cols + 2, CV_8UC3, Scalar(255,255, 255));
 
-    Mat copy( (image.rows*4)/9, image.cols/3, CV_8UC3, Scalar(255,255, 255));    
+    Mat copy( (image.rows*2)/3, image.cols/2, CV_8UC3, Scalar(255,255, 255));    
 
     Vec3b cpixel;
     cpixel[0] = (uchar) 0;
@@ -172,9 +172,9 @@ __global__ void transform1080to480(Mat *image, string *result_image, int n){
 
             if((i+j)%2 == 0){
                 if(i%2 == 0)
-                    copy.at<Vec3b>((i*4)/9,j/3) = ppixel;
+                    copy.at<Vec3b>((i*2)/3,j/2) = ppixel;
                 else
-                    copy.at<Vec3b>(((i*4)/9)+1, j/3+1) = ppixel;
+                    copy.at<Vec3b>(((i*2)/3)+1, j/2+1) = ppixel;
             }
         }
     }    
