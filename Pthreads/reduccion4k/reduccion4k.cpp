@@ -59,8 +59,31 @@ int main(int argc, char** argv) {
 
     FILE * pFile;
     pFile = fopen("../../resultados.txt", "a");
-    fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with %d threads: %ld.%06lds\n", num_threads, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
-    fclose(pFile);    
+    if (num_threads== 16)
+    {
+        fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with 2 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
+        fclose(pFile);
+    }
+    else if (num_threads== 8)
+    {
+        fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with 4 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
+        fclose(pFile);
+    }
+    else if (num_threads== 4)
+    {
+        fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with 8 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
+        fclose(pFile);
+    }
+    else if (num_threads== 16)
+    {
+        fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with 2 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
+        fclose(pFile);
+    }
+    else
+    {
+        fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with %d threads: %ld.%06lds\n", num_threads, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
+        fclose(pFile);
+    }  
     return 0;
 }
 
