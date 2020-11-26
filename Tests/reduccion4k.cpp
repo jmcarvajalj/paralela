@@ -121,16 +121,13 @@ int main(int argc, char **argv)
 
     sleep(1);
 
-
     system("/content/paralela/Tests/github/4k/4k.sh");
 
-    printf("%.6lf\n", number);
+    FILE * pFile;
+    pFile = fopen("/content/paralela/resultados.txt", "a");
 
-    // FILE * pFile;
-    // pFile = fopen("/content/paralela/resultados.txt", "a");
-
-    // fprintf(pFile, "Time elapsed transforming a 4k image to 480p using CUDA with %d threads and %d blocks: %ld.%06lds\n", THREADS, BLOCKS, );
-    //fclose(pFile);
+    fprintf(pFile, "Time elapsed transforming a 4k image to 480p using CUDA with %d threads and %d blocks: %.6lfs\n", THREADS, BLOCKS, number);
+    fclose(pFile);
 
     return 0;
 }

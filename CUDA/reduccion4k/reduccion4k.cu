@@ -30,22 +30,21 @@ int main(int argc, char** argv) {
          */
         return 1;
     }
+
+    if (atoi(argv[4]) <= 0)
+    {
+        printf("Por favor use un numero positivo de bloques\n");
+        return 1;
+    }
+
+    if (atoi(argv[3]) <= 0)
+    {
+        printf("Por favor use un numero positivo de hilos\n");
+        return 1;
+    }
     
     //Size of vectors
-    long n = 100000;
-
-    //Host input
-    Mat *h_image = imread(argv[1], IMREAD_COLOR);
-    
-    //Host output
-    string *h_result_image = argv[2];
-    
-    //Device input
-    Mat *d_image = imread(argv[1], IMREAD_COLOR);
-    
-    //Device output
-    string *d_result_image = argv[2];
-    
+    long n = 100000;    
 
     // Size, in bytes, of each vector
     size_t mat_size = n*sizeof(Mat);
@@ -63,13 +62,23 @@ int main(int argc, char** argv) {
     cudaMalloc(&d_image, mat_size);
     cudaMalloc(&d_result_image, string_size);
 
-    //Initialize on host
-    h_image = imread(argv[1], IMREAD_COLOR);
 
     // Copy host to device
     cudaMemcpy( d_image, h_image, mat_size, cudaMemcpyHostToDevice);
 
     int THREADS, BLOCKS;
+
+     //Host input
+    Mat *h_image = imread(argv[1], IMREAD_COLOR);
+    
+     //Host output
+    string *h_result_image = argv[2];
+     
+     //Device input
+    Mat *d_image = imread(argv[1], IMREAD_COLOR);
+     
+     //Device output
+    string *d_result_image = argv[2];
 
     // Number of threads in each thread block
     THREADS = atoi(argv[3]);
