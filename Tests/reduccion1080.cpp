@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 
     sleep(0.5);
 
-    system("/content/paralela/Tests/github/4k/4k.sh");
+    system("/content/paralela/Tests/github/1080/1080.sh");
 
     FILE * pFile;
     pFile = fopen("/content/paralela/resultados.txt", "a");

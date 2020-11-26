@@ -50,7 +50,7 @@ cd CUDA/ && cd reduccion4k/ && cmake . && make && ./reduccion4k 4k.jpg result.jp
 ./reduccion4k 4k.jpg result.jpg 4 20 && ./reduccion4k 4k.jpg result.jpg 8 20 && 
 ./reduccion4k 4k.jpg result.jpg 16 20 &&
 cd .. && cd .. &&
-printf "\n\n" >> resultados.txt &&
+printf "\n" >> resultados.txt &&
 cd CUDA/ && cd reduccion4k/ &&
 ./reduccion4k 4k.jpg result.jpg 2 40 && ./reduccion4k 4k.jpg result.jpg 4 40 && 
 ./reduccion4k 4k.jpg result.jpg 8 40 && ./reduccion4k 4k.jpg result.jpg 16 40 &&
