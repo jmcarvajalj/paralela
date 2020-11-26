@@ -51,6 +51,7 @@ cd CUDA/ && cd reduccion4k/ && cmake . && make && ./reduccion4k 4k.jpg result.jp
 ./reduccion4k 4k.jpg result.jpg 16 20 && 
 printf "\n" >> resultados.txt &&
 printf "\n" >> resultados.txt &&
+printf "\n" >> resultados.txt &&git
 ./reduccion4k 4k.jpg result.jpg 2 40 && ./reduccion4k 4k.jpg result.jpg 4 40 && 
 ./reduccion4k 4k.jpg result.jpg 8 40 && ./reduccion4k 4k.jpg result.jpg 16 40 &&
 cd .. && cd .. &&
@@ -60,6 +61,7 @@ cd CUDA/ && cd reduccion1080/ && cmake . && make && ./reduccion1080 1080.jpg res
 ./reduccion1080 1080.jpg result.jpg 16 20 && 
 printf "\n" >> resultados.txt &&
 printf "\n" >> resultados.txt &&
+printf "\n" >> resultados.txt &&
 ./reduccion1080 1080.jpg result.jpg 2 40 && ./reduccion1080 1080.jpg result.jpg 4 40 && 
 ./reduccion1080 1080.jpg result.jpg 8 40 && ./reduccion1080 1080.jpg result.jpg 16 40 &&
 cd .. && cd .. &&
@@ -67,6 +69,7 @@ printf "\n" >> resultados.txt &&
 cd CUDA/ && cd reduccion720/ && cmake . && make && ./reduccion720 720.jpg result.jpg 2 20 &&
 ./reduccion720 720.jpg result.jpg 4 20 && ./reduccion720 720.jpg result.jpg 8 20 && 
 ./reduccion720 720.jpg result.jpg 16 20 && 
+printf "\n" >> resultados.txt &&
 printf "\n" >> resultados.txt &&
 printf "\n" >> resultados.txt &&
 ./reduccion720 720.jpg result.jpg 2 40 && ./reduccion720 720.jpg result.jpg 4 40 && 
