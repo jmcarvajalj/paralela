@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 
     gettimeofday(&tval_before, NULL);
     
-    #pragma omp parallel THREADS(THREADS) //inicio de region paralela
+    #pragma omp parallel num_threads(THREADS) //inicio de region paralela
     {
     int ID = omp_get_thread_num();
     transform1080to480(image, THREADS, result_image);
