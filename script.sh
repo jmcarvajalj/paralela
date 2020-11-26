@@ -61,7 +61,7 @@ cd CUDA/ && cd reduccion1080/ && cmake . && make && ./reduccion1080 1080.jpg res
 ./reduccion1080 1080.jpg result.jpg 16 20 &&
 cd .. && cd .. && 
 printf "\n" >> resultados.txt &&
-cd CUDA/ && cd reduccion4k/ &&
+cd CUDA/ && cd reduccion1080/ &&
 ./reduccion1080 1080.jpg result.jpg 2 40 && ./reduccion1080 1080.jpg result.jpg 4 40 && 
 ./reduccion1080 1080.jpg result.jpg 8 40 && ./reduccion1080 1080.jpg result.jpg 16 40 &&
 cd .. && cd .. &&
