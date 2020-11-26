@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
 
     FILE * pFile;
     pFile = fopen("../../resultados.txt", "a");
-    if (num_threads== 16)
+    if (num_threads== 2)
     {
         fprintf(pFile, "Time elapsed transforming a 4k image to 480p using PThreads with 16 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
         fclose(pFile);
