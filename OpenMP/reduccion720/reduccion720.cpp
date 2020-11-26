@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 
     gettimeofday(&tval_before, NULL);
     
-    #pragma omp parallel num_threads(THREADS) //inicio de region paralela
+    #pragma omp parallel THREADS(THREADS) //inicio de region paralela
     {
     int ID = omp_get_thread_num();
     transform4kto480(image, THREADS, result_image);
@@ -43,29 +43,29 @@ int main(int argc, char** argv) {
 
     FILE * pFile;
     pFile = fopen("../../resultados.txt", "a");
-    if (num_threads== 2)
+    if (THREADS== 2)
     {
         fprintf(pFile, "Time elapsed transforming a 720p image to 480p using OpenMP with 16 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
         fclose(pFile);
     }
-    else if (num_threads == 8)
+    else if (THREADS == 8)
     {
         fprintf(pFile, "Time elapsed transforming a 720p image to 480p using OpenMP with 4 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
         fclose(pFile);
     }
-    else if (num_threads == 4)
+    else if (THREADS == 4)
     {
         fprintf(pFile, "Time elapsed transforming a 720p image to 480p using OpenMP with 8 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
         fclose(pFile);
     }
-    else if (num_threads == 16)
+    else if (THREADS == 16)
     {
         fprintf(pFile, "Time elapsed transforming a 720p image to 480p using OpenMP with 2 threads: %ld.%06lds\n", (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
         fclose(pFile);
     }
     else
     {
-        fprintf(pFile, "Time elapsed transforming a 720p image to 480p using OpenMP with %d threads: %ld.%06lds\n", num_threads, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
+        fprintf(pFile, "Time elapsed transforming a 720p image to 480p using OpenMP with %d threads: %ld.%06lds\n", THREADS, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
         fclose(pFile);
     }    
     return 0;
