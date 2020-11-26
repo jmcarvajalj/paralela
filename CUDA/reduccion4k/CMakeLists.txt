@@ -4,5 +4,5 @@ find_package(OpenCV REQUIRED)
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 include_directories(../Tests)
 add_executable(reduccion4k ../Tests/f.cpp)
-target_link_libraries(test ${OpenCV_LIBS})
+target_link_libraries(reduccion4k ${OpenCV_LIBS})
 
