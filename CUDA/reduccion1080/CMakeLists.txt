@@ -3,6 +3,5 @@ project(testing)
 find_package(OpenCV REQUIRED)
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 include_directories(../Tests)
-add_executable(test ../Tests/f.cpp)
+add_executable(reduccion1080 ../Tests/f.cpp)
 target_link_libraries(test ${OpenCV_LIBS})
-
