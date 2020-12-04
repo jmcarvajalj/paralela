@@ -14,51 +14,53 @@ using namespace std;
 using namespace cv;
 
 void transform4kto480(Mat image, int ID, string result_image,int numprocs);
-
-int main(int argc, char** argv[]) {
-    int miyd,numprocs;
-    if (argc < 4) {
+int main(int argc, char** argv) {
+int done = 0,n,miyd,numprocs ,I,rc,i;
+    /*if (argc < 4) {
         // Tell the user how to run the program
         cerr << "Uso:" << argv[0] << " Imagen-Entrada Imagen-Salida #Hilos(Ejemplo:./reduccion1080 1080.jpg result.jpg 8)"<< endl;
         /* "Usage messages" are a conventional way of telling the user
          * how to run a program if they enter the command incorrectly.
          */
+        //return 1;
+    //}    
+    Mat image = imread( "1080.jpg", IMREAD_COLOR);
+    if(image.empty())
+    {
+        std::cout << "Could not read the image: " << image << std::endl;
         return 1;
-    //  
-    Mat image = imread( argv[1], IMREAD_COLOR);
+    }
+    string result_image = "result.jpg";
+
+    int THREADS = 8;
+
+    struct timeval tval_before, tval_after, tval_result;
+
+    gettimeofday(&tval_before, NULL);
+    
     MPI_Init(&argc,&argv);
     MPI_Comm_size(MPI_COMM_WORLD,&numprocs);
     MPI_Comm_rank(MPI_COMM_WORLD,&miyd);
+    if(miyd==0) printf("\nLaunching with %i processes",numprocs);
+    transform4kto480(image, THREADS, result_image,numprocs);
+    MPI_Finalize();
 
-
-    string result_image = argv[2];
-
-    int THREADS = toi(argv[3]);
-
-    struct timeval tval_before, tval_after, tval_result;      
     
-    if(miyd==0){
-        gettimeofday(&tval_before, NULL);
-        printf("\nLaunching with %i processes",numprocs);
-        transform4kto480(image, THREADS, result_image,numprocs);
-    } 
-        
     gettimeofday(&tval_after, NULL);
 
     timersub(&tval_after,&tval_before,&tval_result);
 
-    FILE * pFile;
+    /*FILE * pFile;
     pFile = fopen("../../resultados.txt", "a");
-    fprintf(pFile, "Time elapsed transforming a 1080p image to 480p using openmpi with %d threads: %ld.%06lds\n", THREADS, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
-    fclose(pFile); 
-    MPI_Finalize();
+    fprintf(pFile, "Time elapsed transforming a 1080p image to 480p using OpenMP with %d threads: %ld.%06lds\n", THREADS, (long int)tval_result.tv_sec, (long int)tval_result.tv_usec);    
+    fclose(pFile);*/   
     return 0;
 }
 
 void transform4kto480(Mat image, int ID, string result_image ,int numprocs){
     long int start,end;
-    start = (ITERATIONS/numprocs)*ID;
-    end = (ITERATIONS/numprocs)+1;
+    start = (numprocs)*ID;
+    end = (numprocs)+1;
     long int i = start;
     do{
         
