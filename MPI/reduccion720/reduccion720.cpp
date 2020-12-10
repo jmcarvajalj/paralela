@@ -32,20 +32,17 @@ int done = 0,n,miyd,numprocs ,I,rc,i;
 
     int THREADS = 8;
 
-    struct timeval tval_before, tval_after, tval_result;
-
-    gettimeofday(&tval_before, NULL);
-    
+    double Inicio, Fin;
+    Inicio = MPI_Wtime();
     MPI_Init(&argc,&argv);
     MPI_Comm_size(MPI_COMM_WORLD,&numprocs);
     MPI_Comm_rank(MPI_COMM_WORLD,&miyd);
     if(miyd==0) printf("\nLaunching with %i processes",numprocs);
     transform4kto480(image, THREADS, result_image,numprocs);
+    Fin = MPI_Wtime();
+    double resultado =  Fin-Inicio;
+    printf("Tiempo de respuesta: %.5f\n",resultado);
     MPI_Finalize();
-    
-    gettimeofday(&tval_after, NULL);
-
-    timersub(&tval_after,&tval_before,&tval_result);
 
     /*FILE * pFile;
     pFile = fopen("../../resultados.txt", "a");
