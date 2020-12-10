@@ -7,9 +7,7 @@
 #include <string.h>
 #include <mpi.h>
 #include <math.h>
-#include "omp.h"
 
-#define ITERATIONS 1e09
 using namespace std;
 using namespace cv;
 
@@ -24,13 +22,13 @@ int done = 0,n,miyd,numprocs ,I,rc,i;
          */
         //return 1;
     //}    
-    Mat image = imread( "1080.jpg", IMREAD_COLOR);
+    Mat image = imread( "720.jpg", IMREAD_COLOR);
     if(image.empty())
     {
         std::cout << "Could not read the image: " << image << std::endl;
         return 1;
     }
-    string result_image = "result.jpg";
+    string result_image = "resul.jpg";
 
     int THREADS = 8;
 
@@ -44,7 +42,6 @@ int done = 0,n,miyd,numprocs ,I,rc,i;
     if(miyd==0) printf("\nLaunching with %i processes",numprocs);
     transform4kto480(image, THREADS, result_image,numprocs);
     MPI_Finalize();
-
     
     gettimeofday(&tval_after, NULL);
 
@@ -58,9 +55,10 @@ int done = 0,n,miyd,numprocs ,I,rc,i;
 }
 
 void transform4kto480(Mat image, int ID, string result_image ,int numprocs){
+    long long ITERATIONS =1e09;
     long int start,end;
-    start = (numprocs)*ID;
-    end = (numprocs)+1;
+    start = (ITERATIONS/numprocs)*ID;
+    end = (ITERATIONS/numprocs)+1;
     long int i = start;
     do{
         
@@ -69,8 +67,8 @@ void transform4kto480(Mat image, int ID, string result_image ,int numprocs){
     }
 
     Mat temp(image.rows + 2, image.cols + 2, CV_8UC3, Scalar(255,255, 255));
-
-    Mat copy( (image.rows*4)/9, image.cols/3, CV_8UC3, Scalar(255,255, 255));
+    Mat copy( (image.rows*2)/3, image.cols/2, CV_8UC3, Scalar(255,255, 255));
+    //Mat copy( (image.rows*4)/9, image.cols/3, CV_8UC3, Scalar(255,255, 255));
     
 
     Vec3b cpixel;
@@ -128,12 +126,20 @@ void transform4kto480(Mat image, int ID, string result_image ,int numprocs){
             ppixel[1] = b;
             ppixel[2] = c;
 
+
             if((i+j)%2 == 0){
+                if(i%2 == 0)
+                    copy.at<Vec3b>((i*2)/3,j/2) = ppixel;    
+                    //aqui se anexa el cambio y asignacion de pixeles ala nueva imagen
+                else
+                    copy.at<Vec3b>(((i*2)/3)+1, j/2+1) = ppixel;
+            }
+            /*if((i+j)%2 == 0){
                 if(i%2 == 0)
                     copy.at<Vec3b>((i*4)/9,j/3) = ppixel;
                 else
                     copy.at<Vec3b>(((i*4)/9)+1, j/3+1) = ppixel;
-            }
+            }*/
         }
     }    
         
