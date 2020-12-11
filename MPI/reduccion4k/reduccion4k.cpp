@@ -28,7 +28,7 @@ int done = 0,n,miyd,numprocs ,I,rc,i;
         std::cout << "Could not read the image: " << image << std::endl;
         return 1;
     }
-    string result_image = "resul.jpg";
+    string result_image = "result.jpg";
 
     int THREADS = 8;
     double Inicio, Fin;
